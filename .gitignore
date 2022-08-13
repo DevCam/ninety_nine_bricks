@@ -109,7 +109,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Ignore coverage files
-coverage
+coverage/
 
 # ENV files
 .env*
