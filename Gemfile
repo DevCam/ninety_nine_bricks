@@ -54,6 +54,12 @@ group :development, :test do
 
   # use rspec, instead of minitest
   gem 'rspec-rails', '~> 6.0.0.rc1'
+
+  # use shoulda-matchers for idiomatic testing
+  gem "shoulda-matchers", "~> 5.0"
+
+  # use factory_bot to avoid db shenanigans
+  gem "factory_bot_rails"
 end
 
 group :development do
