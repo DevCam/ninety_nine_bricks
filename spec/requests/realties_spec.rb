@@ -1,13 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/realties", type: :request do
-  
-  # This should return the minimal set of attributes required to create a valid
-  # Realty. As you add validations to Realty, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
-    { address: 'tranquility lane #123' }
-    { img: 'https://images-na.ssl-images-amazon.com/images/I/61BHbnmoGDL.jpg' }
+    attributes_for(:realty)
   }
 
   let(:invalid_attributes) {
