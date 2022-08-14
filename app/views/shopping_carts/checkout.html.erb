@@ -1,1 +1,23 @@
-<h1>checkout of this mofo</h1>
+<p style="color: green"><%= notice %></p>
+<h1> checkout </h1>
+
+<p>
+<%= @shopping_cart.user.name %> please review your new investment!
+</p>
+
+<h2> bricks </h2>
+
+<div id="offers">
+  <% if @shopping_cart.bricks.empty? %>
+    <p> oh no! parece que no hay nada por aqui :( </p>
+  <% end %>
+
+  <% @shopping_cart.bricks.each do |brick| %>
+    <%= render brick %>
+  <% end %>
+</div>
+
+<div>
+  <p> Si todo esta en orden, completa la compra! </p>
+  <button> lgtm </button>
+</div>

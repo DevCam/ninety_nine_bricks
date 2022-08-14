@@ -16,8 +16,6 @@ class ShoppingCartsController < ApplicationController
 
   # GET /shopping_carts/1/checkout
   def checkout
-    # int checkout process?
-
   end
 
   # GET /shopping_carts/new
