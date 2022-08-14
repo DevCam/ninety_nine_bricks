@@ -14,9 +14,13 @@
           <string>Total Bricks:</string>
           <%= realty.bricks.count %> |
 
-          <string>on sale:</string>
-          <%= realty.bricks.where(on_sale: true).count %>
-          starting from <%= realty.bricks.where(on_sale: true).order(:price).first.price %>
+          <% if realty.bricks.count > 0 %>
+            <string>on sale:</string>
+            <%= realty.bricks.where(on_sale: true).count %>
+            starting from <%= realty.bricks.where(on_sale: true).order(:price).first.price %>
+          <% else %>
+            <string> No bricks on sale :( </string>
+          <% end %>
         </p>
         <p>
           <%= link_to "Show this realty", realty %>
