@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :offers
-  resources :realties, only: [:index, :show]
+  resources :realties, only: [ :index, :show ]
 
   resources :shopping_carts do
     get 'checkout', :on => :member
@@ -10,6 +10,5 @@ Rails.application.routes.draw do
 
   resources :users
 
-  # Defines the root path route ("/")
   root "realties#index"
 end
