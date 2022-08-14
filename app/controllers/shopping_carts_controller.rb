@@ -1,5 +1,5 @@
 class ShoppingCartsController < ApplicationController
-  before_action :set_shopping_cart, only: %i[ show edit update destroy checkout]
+  before_action :set_shopping_cart, only: %i[ show edit update destroy checkout accept_terms complete_purchase]
 
   # WARNING!!!!!!! ->>>> THIS IS ONLY FOR DEMO
   # AUTH TOKEN SHOULD *ALWAYS* be checked!
@@ -16,6 +16,11 @@ class ShoppingCartsController < ApplicationController
 
   # GET /shopping_carts/1/checkout
   def checkout
+  end
+
+  def accept_terms
+    @shopping_cart.terms_accepted = true
+    @shopping_cart.save
   end
 
   # GET /shopping_carts/new
@@ -42,10 +47,30 @@ class ShoppingCartsController < ApplicationController
 
   end
 
+  def complete_purchase
+    respond_to do |format|
+
+      @shopping_cart.offers.each do | offer |
+        brick = offer.brick
+        brick.user = @shopping_cart.user
+        brick.on_sale = false
+        brick.save
+      end
+
+      format.html { redirect_to user_url(@shopping_cart.user), notice: "Purchase was sucesfull!" }
+      format.json { render :show, status: :ok, location: @shopping_cart.user }
+
+      #else
+      # format.html { render :new, status: :unprocessable_entity }
+      # format.json { render json: @offer.errors, status: :unprocessable_entity }
+      # end
+    end
+
+  end
+
   private
     def set_shopping_cart
-      @shopping_cart = ShoppingCart.find(params[:id]) if params[:id]
-      # @shopping_cart = User.find(params[:user_id]).shopping_cart if params[:user_id]
+      @shopping_cart = ShoppingCart.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

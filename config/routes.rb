@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :shopping_carts do
     get 'checkout', :on => :member
+    get 'complete_purchase', :on => :member
+    get 'accept_terms', :on => :member
   end
 
   resources :users
