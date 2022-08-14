@@ -55,6 +55,7 @@ class ShoppingCartsController < ApplicationController
         brick.user = @shopping_cart.user
         brick.on_sale = false
         brick.save
+        offer.destroy
       end
 
       format.html { redirect_to user_url(@shopping_cart.user), notice: "Purchase was sucesfull!" }
@@ -65,7 +66,6 @@ class ShoppingCartsController < ApplicationController
       # format.json { render json: @offer.errors, status: :unprocessable_entity }
       # end
     end
-
   end
 
   private

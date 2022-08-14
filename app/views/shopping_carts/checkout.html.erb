@@ -35,7 +35,7 @@
 
   <div>
     <p> Si todo esta en orden, completa la compra! </p>
-    <button> lgtm </button>
+    <%= button_to "Completar", { action: "complete_purchase" }, id: @shopping_cart.id, method: :get %>
   </div>
 
 <% end %>
