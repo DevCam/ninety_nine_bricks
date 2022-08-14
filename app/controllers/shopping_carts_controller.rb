@@ -23,8 +23,22 @@ class ShoppingCartsController < ApplicationController
   def edit
   end
 
+  def create
+    @shopping_cart = ShoppingCart.new(shopping_cart_params)
+
+    respond_to do |format|
+      if @offer.save
+        format.html { redirect_to shopping_cart_url(@shopping_cart), notice: "Cart was successfully created." }
+        format.json { render :show, status: :created, location: @shopping_cart }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @shopping_cart.errors, status: :unprocessable_entity }
+      end
+    end
+
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_shopping_cart
       @shopping_cart = ShoppingCart.find(params[:id]) if params[:id]
       @shopping_cart = User.find(params[:user_id]).shopping_cart if params[:user_id]

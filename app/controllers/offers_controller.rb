@@ -23,7 +23,6 @@ class OffersController < ApplicationController
   def edit
   end
 
-  # POST /offers or /offers.json
   def create
     @offer = Offer.new(offer_params)
 
