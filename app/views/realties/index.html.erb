@@ -4,9 +4,23 @@
 
 <div id="realties">
   <% @realties.each do |realty| %>
-    <%= render realty %>
-    <p>
-      <%= link_to "Show this realty", realty %>
-    </p>
+    <span>
+        <img src="<%= realty.img %>" alt="realty thumbnail" width="250" height="250">
+        <p>
+          <strong>Address:</strong>
+          <%= realty.address %>
+        </p>
+        <p>
+          <string>Total Bricks:</string>
+          <%= realty.bricks.count %> |
+
+          <string>on sale:</string>
+          <%= realty.bricks.where(on_sale: true).count %>
+          starting from <%= realty.bricks.where(on_sale: true).order(:price).first.price %>
+        </p>
+        <p>
+          <%= link_to "Show this realty", realty %>
+        </p>
+    </span>
   <% end %>
 </div>
