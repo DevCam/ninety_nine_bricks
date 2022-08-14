@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true # Consider making unique
   has_many :bricks
   has_one :shopping_cart
 end
