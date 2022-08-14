@@ -48,6 +48,16 @@ class ShoppingCartsController < ApplicationController
   end
 
   def complete_purchase
+
+    unless @shopping_cart.terms_accepted
+      respond_to do |format|
+        @shopping_cart.errors.add(:terms_accepted, message: 'terms are not accepted')
+        format.html { redirect_to shopping_cart_url(@shopping_cart), notice: "Accept the terms first!" }
+        format.json { render json: @shopping_cart.errors, status: :unprocessable_entity }
+      end
+      return
+    end
+
     respond_to do |format|
       failed = false
 
@@ -56,7 +66,7 @@ class ShoppingCartsController < ApplicationController
           brick = offer.brick
           if brick.updated_at > offer.created_at
             failed = true
-            @shopping_cart.errors.add(:brick, message: 'this brick is no longer available as intended!')
+            @shopping_cart.errors.add(:bricks, { error: 'brick is no longer available', brick: brick.id })
             raise ActiveRecord::Rollback # NO WAIT, GO BACK!
           end
 

@@ -26,16 +26,17 @@
   <div id="offers">
     <% if @shopping_cart.bricks.empty? %>
       <p> oh no! parece que no hay nada por aqui :( </p>
-    <% end %>
+    <% else %>
+      <% @shopping_cart.bricks.order(:realty_id).each do |brick| %>
+        <%= render brick %>
+      <% end %>
 
-    <% @shopping_cart.bricks.order(:realty_id).each do |brick| %>
-      <%= render brick %>
+      <div>
+        <p> Si todo esta en orden, completa la compra! </p>
+        <%= button_to "Completar", { action: "complete_purchase" }, id: @shopping_cart.id, method: :get %>
+      </div>
     <% end %>
   </div>
 
-  <div>
-    <p> Si todo esta en orden, completa la compra! </p>
-    <%= button_to "Completar", { action: "complete_purchase" }, id: @shopping_cart.id, method: :get %>
-  </div>
 
 <% end %>
