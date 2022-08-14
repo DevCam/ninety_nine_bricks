@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "/shopping_carts", type: :request do
-  
-  # This should return the minimal set of attributes required to create a valid
-  # ShoppingCart. As you add validations to ShoppingCart, be sure to
-  # adjust the attributes here as well.
+
   let(:valid_attributes) {
     attributes_for(:shopping_cart)
   }
@@ -25,6 +22,14 @@ RSpec.describe "/shopping_carts", type: :request do
     it "renders a successful response" do
       shopping_cart = ShoppingCart.create! valid_attributes
       get shopping_cart_url(shopping_cart)
+      expect(response).to be_successful
+    end
+  end
+
+  describe "GET /accept_terms" do
+    it "renders a successful response" do
+      shopping_cart = ShoppingCart.create! valid_attributes
+      get accept_terms_shopping_cart_url(shopping_cart)
       expect(response).to be_successful
     end
   end

@@ -19,8 +19,8 @@ class ShoppingCartsController < ApplicationController
   end
 
   def accept_terms
-    @shopping_cart.terms_accepted = true
-    @shopping_cart.save
+     @shopping_cart.terms_accepted = true
+     @shopping_cart.save
   end
 
   # GET /shopping_carts/new
@@ -49,7 +49,7 @@ class ShoppingCartsController < ApplicationController
 
   def complete_purchase
 
-    unless @shopping_cart.terms_accepted
+    unless @shopping_cart.terms_accepted?
       respond_to do |format|
         @shopping_cart.errors.add(:terms_accepted, message: 'terms are not accepted')
         format.html { redirect_to shopping_cart_url(@shopping_cart), notice: "Accept the terms first!" }
@@ -59,13 +59,12 @@ class ShoppingCartsController < ApplicationController
     end
 
     respond_to do |format|
-      failed = false
 
-      ShoppingCart.transaction do
+      @shopping_cart.transaction do
+
          @shopping_cart.offers.each do | offer |
           brick = offer.brick
           if brick.updated_at > offer.created_at
-            failed = true
             @shopping_cart.errors.add(:bricks, { error: 'brick is no longer available', brick: brick.id })
             raise ActiveRecord::Rollback # NO WAIT, GO BACK!
           end
@@ -74,16 +73,18 @@ class ShoppingCartsController < ApplicationController
           brick.on_sale = false
           brick.save
           offer.destroy
-        end
+         end
+
       end
 
-      unless failed
+      if @shopping_cart.errors.empty?
         format.html { redirect_to user_url(@shopping_cart.user), notice: "Purchase was sucesfull!" }
         format.json { render :show, status: :ok, location: @shopping_cart.user }
+      else
+        format.html { redirect_to shopping_cart_url(@shopping_cart), notice: "Oi! something terrible has happened!" }
+        format.json { render json: @shopping_cart.errors, status: :unprocessable_entity }
       end
 
-      format.html { redirect_to shopping_cart_url(@shopping_cart), notice: "Oi! something terrible has happened!" }
-      format.json { render json: @shopping_cart.errors, status: :unprocessable_entity }
     end
   end
 

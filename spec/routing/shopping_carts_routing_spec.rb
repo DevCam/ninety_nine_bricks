@@ -13,5 +13,12 @@ RSpec.describe ShoppingCartsController, type: :routing do
     it "routes to #checkout" do
       expect(get: "/shopping_carts/1/checkout").to route_to("shopping_carts#checkout", id: "1")
     end
+
+    it "routes to "
+
+    it "routes to #complete_purchase" do
+      expect(get: "/shopping_carts/1/complete_purchase").to route_to("shopping_carts#complete_purchase", id: "1")
+    end
+
   end
 end
