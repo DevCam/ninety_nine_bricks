@@ -60,11 +60,6 @@ class ShoppingCartsController < ApplicationController
 
       format.html { redirect_to user_url(@shopping_cart.user), notice: "Purchase was sucesfull!" }
       format.json { render :show, status: :ok, location: @shopping_cart.user }
-
-      #else
-      # format.html { render :new, status: :unprocessable_entity }
-      # format.json { render json: @offer.errors, status: :unprocessable_entity }
-      # end
     end
   end
 
