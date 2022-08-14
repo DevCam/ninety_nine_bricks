@@ -1,5 +1,5 @@
 class ShoppingCartsController < ApplicationController
-  before_action :set_shopping_cart, only: %i[ show edit update destroy ]
+  before_action :set_shopping_cart, only: %i[ show edit update destroy checkout]
 
   # WARNING!!!!!!! ->>>> THIS IS ONLY FOR DEMO
   # AUTH TOKEN SHOULD *ALWAYS* be checked!
@@ -12,6 +12,12 @@ class ShoppingCartsController < ApplicationController
 
   # GET /shopping_carts/1 or /shopping_carts/1.json
   def show
+  end
+
+  # GET /shopping_carts/1/checkout
+  def checkout
+    # int checkout process?
+
   end
 
   # GET /shopping_carts/new
@@ -41,7 +47,7 @@ class ShoppingCartsController < ApplicationController
   private
     def set_shopping_cart
       @shopping_cart = ShoppingCart.find(params[:id]) if params[:id]
-      @shopping_cart = User.find(params[:user_id]).shopping_cart if params[:user_id]
+      # @shopping_cart = User.find(params[:user_id]).shopping_cart if params[:user_id]
     end
 
     # Only allow a list of trusted parameters through.
