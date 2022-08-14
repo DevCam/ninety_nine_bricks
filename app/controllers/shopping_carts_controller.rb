@@ -49,17 +49,31 @@ class ShoppingCartsController < ApplicationController
 
   def complete_purchase
     respond_to do |format|
+      failed = false
 
-      @shopping_cart.offers.each do | offer |
-        brick = offer.brick
-        brick.user = @shopping_cart.user
-        brick.on_sale = false
-        brick.save
-        offer.destroy
+      ShoppingCart.transaction do
+         @shopping_cart.offers.each do | offer |
+          brick = offer.brick
+          if brick.updated_at > offer.created_at
+            failed = true
+            @shopping_cart.errors.add(:brick, message: 'this brick is no longer available as intended!')
+            raise ActiveRecord::Rollback # NO WAIT, GO BACK!
+          end
+
+          brick.user = @shopping_cart.user
+          brick.on_sale = false
+          brick.save
+          offer.destroy
+        end
       end
 
-      format.html { redirect_to user_url(@shopping_cart.user), notice: "Purchase was sucesfull!" }
-      format.json { render :show, status: :ok, location: @shopping_cart.user }
+      unless failed
+        format.html { redirect_to user_url(@shopping_cart.user), notice: "Purchase was sucesfull!" }
+        format.json { render :show, status: :ok, location: @shopping_cart.user }
+      end
+
+      format.html { redirect_to shopping_cart_url(@shopping_cart), notice: "Oi! something terrible has happened!" }
+      format.json { render json: @shopping_cart.errors, status: :unprocessable_entity }
     end
   end
 
