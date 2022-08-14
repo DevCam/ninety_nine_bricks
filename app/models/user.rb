@@ -10,4 +10,5 @@
 class User < ApplicationRecord
   validates :name, presence: true
   has_many :bricks
+  has_one :shopping_cart
 end

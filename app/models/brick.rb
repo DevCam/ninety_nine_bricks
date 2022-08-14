@@ -25,4 +25,7 @@ class Brick < ApplicationRecord
   belongs_to :user, optional: true
 
   validates :price, presence: true, :if => :on_sale?
+
+  has_many :offers
+  has_many :shopping_carts, :through => :offers
 end

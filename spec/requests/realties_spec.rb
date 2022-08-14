@@ -5,10 +5,6 @@ RSpec.describe "/realties", type: :request do
     attributes_for(:realty)
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
   describe "GET /index" do
     it "renders a successful response" do
       Realty.create! valid_attributes

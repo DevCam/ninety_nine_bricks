@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
 
+  # WARNING!!!!!!! ->>>> THIS IS ONLY FOR DEMO
+  # AUTH TOKEN SHOULD *ALWAYS* be checked!
+  skip_before_action :verify_authenticity_token
+
   # GET /users or /users.json
   def index
     @users = User.all

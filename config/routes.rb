@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
-  resources :users
+  resources :offers
   resources :realties, only: [:index, :show]
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :shopping_carts, only: [:index, :show]
+
+  resources :users do
+    resource :shopping_cart
+  end
+
 
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "realties#index"
 end
