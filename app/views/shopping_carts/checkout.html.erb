@@ -12,7 +12,7 @@
     <p> oh no! parece que no hay nada por aqui :( </p>
   <% end %>
 
-  <% @shopping_cart.bricks.each do |brick| %>
+  <% @shopping_cart.bricks.order(:realty_id).each do |brick| %>
     <%= render brick %>
   <% end %>
 </div>

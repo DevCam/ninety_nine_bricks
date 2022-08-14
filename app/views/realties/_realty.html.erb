@@ -6,6 +6,10 @@
   </p>
   <p>
     <string>Total Bricks:</string>
-    <%= realty.bricks.count %>
+    <%= realty.bricks.count %> |
+
+    <string>on sale:</string>
+    <%= realty.bricks.where(on_sale: true).count %>
+    starting from <%= realty.bricks.where(on_sale: true).order(:price).first.price %>
   </p>
 </div>
