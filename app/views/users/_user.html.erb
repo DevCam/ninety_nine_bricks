@@ -1,6 +1,20 @@
 <div id="<%= dom_id user %>">
   <p>
-    <strong>Name:</strong>
-    <%=  user.name %>
+    <div>
+      <strong>Name:</strong>
+      <%=  user.name %>
+    </div>
+
+    <strong>Owned bricks:</strong>
+
+    <div id="bricks">
+      <% if user.bricks.empty? %>
+        <p> oh no! parece que no hay nada por aqui :( </p>
+      <% else %>
+        <% user.bricks.order(:realty_id).each do |brick| %>
+            <%= render brick %>
+        <% end %>
+      <% end %>
+    </div>
   </p>
 </div>

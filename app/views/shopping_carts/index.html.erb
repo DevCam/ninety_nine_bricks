@@ -4,7 +4,10 @@
 
 <div id="shopping_carts">
   <% @shopping_carts.each do |shopping_cart| %>
-    <%= render shopping_cart %>
+    <strong> Owner - </strong>
+    <%= shopping_cart.user.name %>
+    <strong> current offers - </strong>
+    <%= shopping_cart.bricks.count %>
     <p>
       <%= link_to "Show this shopping cart", shopping_cart %>
     </p>

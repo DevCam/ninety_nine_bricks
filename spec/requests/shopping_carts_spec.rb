@@ -26,14 +26,6 @@ RSpec.describe "/shopping_carts", type: :request do
     end
   end
 
-  describe "GET /accept_terms" do
-    it "renders a successful response" do
-      shopping_cart = ShoppingCart.create! valid_attributes
-      get accept_terms_shopping_cart_url(shopping_cart)
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET /complete_purchase" do
     context "on correct state" do
 

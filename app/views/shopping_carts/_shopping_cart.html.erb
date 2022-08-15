@@ -4,5 +4,18 @@
     <%= shopping_cart.user.name %>
   </p>
 
+  <div id="offers">
+    <% if shopping_cart.bricks.empty? %>
+      <p> oh no! parece que no hay nada por aqui :( </p>
+    <% else %>
+      <% shopping_cart.bricks.order(:realty_id).each do |brick| %>
+        <div>
+          <%= render brick %>
+          <%= button_to "delete offer", shopping_cart.offers.where(brick_id: brick.id).first, method: :delete %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
   <%= link_to "go to checkout", checkout_shopping_cart_path(shopping_cart.id) %> |
 </div>

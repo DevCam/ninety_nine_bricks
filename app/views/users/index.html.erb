@@ -4,7 +4,7 @@
 
 <div id="users">
   <% @users.each do |user| %>
-    <%= render user %>
+    <%=  user.name %>
     <p>
       <%= link_to "Show this user", user %>
       <%= link_to "Show shopping-cart", user.shopping_cart %>

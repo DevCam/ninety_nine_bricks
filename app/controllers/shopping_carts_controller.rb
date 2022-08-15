@@ -20,7 +20,16 @@ class ShoppingCartsController < ApplicationController
 
   def accept_terms
      @shopping_cart.terms_accepted = true
-     @shopping_cart.save
+
+     respond_to do |format|
+       if @shopping_cart.save
+         format.html { redirect_to checkout_shopping_cart_url(@shopping_cart), notice: "Terms accepted!" }
+         format.json { render json: @shopping_cart.id, status: :ok }
+       else
+         format.html { render :new, status: :unprocessable_entity }
+         format.json { render json: @shopping_cart.errors, status: :unprocessable_entity }
+       end
+     end
   end
 
   # GET /shopping_carts/new

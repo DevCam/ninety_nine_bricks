@@ -27,6 +27,13 @@ namespace :devcam do
     ana = User.create(name: 'ana')
     ana.build_shopping_cart.save
 
+    conflict = r.bricks.create(on_sale: true, price: 123)
+
+    bob.shopping_cart.bricks << conflict
+    ana.shopping_cart.bricks << conflict # generate a conflict brick!
+
+    bob.shopping_cart.bricks << r_2.bricks.where(on_sale: true).take(2)
+    bob.shopping_cart.bricks << r_3.bricks.where(on_sale: true).take(10) # bob is a good investor
   end
 
 end
